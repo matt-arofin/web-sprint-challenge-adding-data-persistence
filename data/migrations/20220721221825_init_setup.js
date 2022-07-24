@@ -23,7 +23,7 @@ exports.up = function(knex) { //create 3 tables: projects, resources, tasks
                 .onUpdate('CASCADE') // is this necessary?
                 .onDelete('CASCADE')
         })
-        .createTable('resource_assignment', tbl => {
+        .createTable('project_resources', tbl => {
             tbl.increments();
             // tbl.integer('project_id')
             //     .unsigned()
@@ -33,10 +33,12 @@ exports.up = function(knex) { //create 3 tables: projects, resources, tasks
             //     .onDelete('CASCADE')
             tbl.text('project_name')
                 .references('project_name')
-                .inTable('porjects')
+                .inTable('projects')
+                .onUpdate('CASCADE')
+                .onDelete('CASCADE')
             tbl.text('project_completed')
                 .references('project_completed')
-                .inTable('porjects')
+                .inTable('projects')
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE')
             // tbl.integer('resource_id')
@@ -55,7 +57,7 @@ exports.up = function(knex) { //create 3 tables: projects, resources, tasks
 
 exports.down = function(knex) {
     return knex.schema
-        .dropTableIfExists('resource_assignment')
+        .dropTableIfExists('project_resources')
         .dropTableIfExists('tasks')
         .dropTableIfExists('resources')
         .dropTableIfExists('projects')
